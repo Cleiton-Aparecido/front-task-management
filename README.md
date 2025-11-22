@@ -1,3 +1,5 @@
+# front-task-management
+
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
 
 ## Getting Started
@@ -34,4 +36,32 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
-# front-task-management
+
+## Como rodar projeto
+
+Pré-requisitos
+
+Antes de rodar o projeto, instale:
+
+✔ Docker (recomendado)
+
+Docker Desktop
+https://www.docker.com/products/docker-desktop/
+
+- instale o docker desktop
+- Crie o arquivo .env com base no arquivo env.example
+- rode o comando `docker-compose up --build -d`
+  Ou, se estiver no Linux:
+  `sudo apt install docker.io docker-compose -y`
+
+- Como Rodar o Projeto com Docker
+  `docker-compose up --build -d`
+
+Após o container subir, abra:
+
+👉 http://localhost:4000
+
+### Backend:
+
+- repository: https://github.com/Cleiton-Aparecido/api_task_management
+- url: `http://localhost:3000`

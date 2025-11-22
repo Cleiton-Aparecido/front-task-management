@@ -1,7 +1,7 @@
-const API_URL = process.env.NEXT_PUBLIC_API_URL;
+const API_URL = process.env.NEXT_PUBLIC_API_URL ?? "";
 
-if (!API_URL) {
-  throw new Error("NEXT_PUBLIC_API_URL não definida no .env.local");
+if (!API_URL && typeof window === "undefined") {
+  console.warn("NEXT_PUBLIC_API_URL não configurada durante o build");
 }
 
 // ==================== AUTH ====================
@@ -29,10 +29,17 @@ export type Task = {
   userName: string;
 };
 
-function getAuthHeaders() {
-  if (typeof window === "undefined") return {};
+function getAuthHeaders(): Record<string, string> {
+  if (typeof window === "undefined") {
+    // no build (Node) não tem window/localStorage
+    return {};
+  }
+
   const token = localStorage.getItem("token");
-  if (!token) return {};
+  if (!token) {
+    return {};
+  }
+
   return {
     Authorization: `Bearer ${token}`,
   };
