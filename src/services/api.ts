@@ -85,9 +85,8 @@ export async function updateTask(
   });
 
   if (!res.ok) {
-    throw new Error("Erro ao atualizar task");
+    throw new Error("Erro ao aatualizar task");
   }
-
   return res.json();
 }
 

@@ -9,7 +9,13 @@ import {
 } from "@/src/services/api";
 import { useRouter } from "next/navigation";
 import { FormEvent, useEffect, useState } from "react";
-import { FiLogOut, FiEdit, FiTrash2, FiPlusCircle } from "react-icons/fi";
+import {
+  FiLogOut,
+  FiEdit,
+  FiTrash2,
+  FiPlusCircle,
+  FiUser,
+} from "react-icons/fi";
 
 export default function TasksPage() {
   const router = useRouter();
@@ -71,6 +77,7 @@ export default function TasksPage() {
       await loadTasks();
     } catch (err: any) {
       setError(err.message || "Erro ao salvar task");
+      console.log(err.message);
     } finally {
       setLoadingForm(false);
     }
@@ -104,7 +111,6 @@ export default function TasksPage() {
 
   return (
     <main className="min-h-screen bg-gray-50">
-      {/* HEADER */}
       <header className="flex items-center justify-between px-8 py-4 bg-white shadow-md sticky top-0 z-10">
         <h1 className="text-2xl font-bold text-gray-800">
           Gerenciador de Tasks
@@ -118,7 +124,6 @@ export default function TasksPage() {
       </header>
 
       <div className="max-w-4xl mx-auto p-6 space-y-8">
-        {/* FORM */}
         <section className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900 mb-4 flex items-center gap-2">
             <FiPlusCircle size={20} />
@@ -133,7 +138,7 @@ export default function TasksPage() {
                 Título
               </label>
               <input
-                className="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 text-sm focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50"
+                className="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 text-black focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Digite o título da task"
@@ -146,7 +151,7 @@ export default function TasksPage() {
                 Descrição
               </label>
               <textarea
-                className="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 text-sm h-24 resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50"
+                className="w-full mt-1 border border-gray-300 rounded-lg px-3 py-2 text-black h-24 resize-none focus:ring-2 focus:ring-blue-500 focus:outline-none bg-gray-50"
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 placeholder="Digite uma descrição"
@@ -180,7 +185,6 @@ export default function TasksPage() {
           </form>
         </section>
 
-        {/* LISTA DE TASKS */}
         <section className="bg-white rounded-xl shadow-md p-6 border border-gray-200">
           <h2 className="text-xl font-semibold text-gray-900 mb-4">Tasks</h2>
 
@@ -196,28 +200,44 @@ export default function TasksPage() {
             {tasks.map((task) => (
               <li
                 key={task.id}
-                className="p-4 border border-gray-300 rounded-lg flex justify-between items-center bg-gray-50 hover:bg-gray-100 transition"
+                className="p-4 border border-gray-200 rounded-lg bg-gray-50 hover:bg-gray-100 transition group flex justify-between items-start gap-4"
               >
-                <div>
-                  <h3 className="text-lg font-bold text-gray-800">
-                    {task.title}
-                  </h3>
-                  <p className="text-sm text-gray-600">{task.description}</p>
+                <div className="flex-1 space-y-2">
+                  <div className="flex items-center gap-2 text-xs text-gray-600">
+                    <div className="w-8 h-8 rounded-full bg-blue-100 flex items-center justify-center">
+                      <FiUser className="text-blue-600" size={16} />
+                    </div>
+                    <span className="font-medium">
+                      {task.userName || "Usuário desconhecido"}
+                    </span>
+                  </div>
+
+                  <div>
+                    <h3 className="text-lg font-bold text-gray-800">
+                      {task.title}
+                    </h3>
+                    <p className="text-sm text-gray-600">{task.description}</p>
+                    <p className="text-xs text-gray-400">
+                      Created: {task.userName}
+                    </p>
+                  </div>
                 </div>
 
-                <div className="flex gap-3">
+                <div className="flex flex-col gap-2">
                   <button
                     onClick={() => handleEdit(task)}
-                    className="flex items-center gap-1 bg-yellow-100 hover:bg-yellow-500 text-black font-semibold px-3 py-1 rounded-md text-sm"
+                    className="flex items-center justify-center gap-1  hover:bg-yellow-200 text-yellow-800 font-semibold px-3 py-1 rounded-md text-xs transition"
+                    title="Editar"
                   >
-                    <FiEdit size={16} />
+                    <FiEdit size={14} />
                   </button>
 
                   <button
                     onClick={() => handleDelete(task.id)}
-                    className="flex items-center gap-1 bg-red-600 hover:bg-red-500 text-white font-semibold px-3 py-1 rounded-md text-sm"
+                    className="flex items-center justify-center gap-1 bg-red-200 hover:bg-red-500 text-white font-semibold px-3 py-1 rounded-md text-xs transition"
+                    title="Excluir"
                   >
-                    <FiTrash2 size={16} />
+                    <FiTrash2 size={14} />
                   </button>
                 </div>
               </li>
