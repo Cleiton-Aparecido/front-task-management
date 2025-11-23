@@ -5,7 +5,7 @@ services:
     build:
       context: .
       args:
-        NEXT_PUBLIC_API_URL: "http://host.docker.internal:3000"
+        NEXT_PUBLIC_API_URL: "http://localhost:3000"
     container_name: task-manager-front
     ports:
       - "4000:3000" 
